@@ -39,5 +39,35 @@ def index():
         return render_template("index.html", tasks=tasks)
 
 
+@app.route("/delete/<int:id>")
+def delete(id):
+    task_pop = Todo.query.get_or_404(id)
+
+    try:
+        db.session.delete(task_pop)
+        db.session.commit()
+        return redirect("/")
+    except:
+        return "Opps!! There was a problem deleting this task"
+
+
+@app.route("/edit/<int:id>", methods= ['GET', 'POST'])
+def edit(id):
+    task = Todo.query.get_or_404(id)
+
+    if request.method == 'POST':
+        task.task = request.form['task']
+        task.content = request.form['content']
+
+        try:
+            db.session.commit()
+            return redirect("/")
+        except:
+            return "Sorry. There was an issue updating this task."
+
+    else:
+        return render_template("edit.html", task=task)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
