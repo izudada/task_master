@@ -1,9 +1,45 @@
 {% extends "base.html" %}
 
 {% block head %} 
-
+    <title> Task Master </title> 
 {% endblock %}
 
 {% block body %} 
-    <h1> Task Maker </h1>
+    <div class="content" align="center">
+        <h1> Task Master </h1> <br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th> Task </th>
+                    <th> Content </th>
+                    <th> Date Added </th>
+                    <th> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td> {{ task.task }}  </td>
+                        <td> {{ task.content }} </td>
+                        <td> {{ task.date_created.date() }} </td>
+                        <td> 
+                            <a href=""> Edit </a> <br>
+                            <a href=""> Delete</a>
+                        </td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+
+        </table>
+        <hr>
+        <br>
+
+        <h2> Add New Task </h2>
+        <form action="/" method="post">
+            <input type="text" name="task" id="task" placeholder="Name"> <br> <br>
+            <input type="text" name="content" id="content" placeholder="Task"> <br><br> 
+            <input type="submit" value="Add Task">
+        </form>
+    </div>
 {% endblock %}
